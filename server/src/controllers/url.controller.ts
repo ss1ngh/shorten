@@ -38,7 +38,7 @@ export const createShortUrl = async (
       message: "Short URL created",
       data: {
         url,
-        qrCode: qrCode, 
+        qrCode: qrCode,
       },
     });
   } catch (error) {
@@ -73,7 +73,12 @@ export const getShortUrl = async (
       });
     }
 
-    await incrementClicks(shortId);
+    const rawIp =
+      req.headers["x-forwarded-for"] || req.socket.remoteAddress || "unknown";
+    const ip: string = (Array.isArray(rawIp) ? rawIp[0] : rawIp) || "unknown";
+    const userAgent = req.headers["user-agent"] || "unknown";
+
+    await incrementClicks(shortId, { ip, userAgent });
 
     return res.redirect(StatusCodes.MOVED_TEMPORARILY, url.fullUrl);
   } catch (error) {

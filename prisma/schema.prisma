@@ -19,4 +19,16 @@ model Url {
   qrCode    String?  @db.Text
   clicks    Int      @default(0)
   createdAt DateTime @default(now())
+
+  clickLogs Clicks[]
+}
+
+model Clicks {
+  id        String   @id @default(uuid())
+  ip        String
+  userAgent String?
+  clickedAt DateTime @default(now())
+
+  urlId String
+  url   Url    @relation(fields: [urlId], references: [id])
 }
