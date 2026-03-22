@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { nanoid } from "nanoid";
 import { createUrlSchema, getUrlSchema } from "../schemas/index.js";
+import QRCode from "qrcode";
 import {
   saveUrl,
   findUrlByShortId,
@@ -15,12 +16,16 @@ export const createShortUrl = async (
   next: NextFunction,
 ) => {
   try {
+    //validate input
     const validated = createUrlSchema.parse({ body: req.body });
     const { fullUrl } = validated.body;
 
     const shortId = nanoid(8);
     const baseUrl = process.env.BASE_URL || "http://localhost:5000";
     const shortUrl = `${baseUrl}/${shortId}`;
+
+    //create qr code
+    const qrCode = await QRCode.toDataURL(shortUrl);
 
     const url = await saveUrl({
       fullUrl,
@@ -31,7 +36,10 @@ export const createShortUrl = async (
     return res.status(StatusCodes.CREATED).json({
       success: true,
       message: "Short URL created",
-      data: url,
+      data: {
+        url,
+        qrCode: qrCode, 
+      },
     });
   } catch (error) {
     next(error);
