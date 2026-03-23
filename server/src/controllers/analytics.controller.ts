@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { getUrlSchema } from "../schemas/url.schema.js";
-import { getUrlAnalytics } from "../repository/index.js";
+import { getUrlAnalytics, getUrlAnalyticsByDate } from "../repository/index.js";
 import { StatusCodes } from "http-status-codes";
 
 export const getAnalytics = async (
@@ -20,10 +20,15 @@ export const getAnalytics = async (
       });
     }
 
+    const analyticsByDate = await getUrlAnalyticsByDate(analytics.id);
+
     return res.status(StatusCodes.OK).json({
       success: true,
       message: "Analytics data found",
-      data: analytics,
+      data: {
+        rawLogs: analytics.clickLogs,
+        chartData: analyticsByDate,
+      },
     });
   } catch (error) {
     next(error);

@@ -85,3 +85,43 @@ export const getShortUrl = async (
     next(error);
   }
 };
+
+export const getShortUrlQrCode = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const validatedData = getUrlSchema.parse({ params: req.params });
+    const { shortId } = validatedData.params;
+
+    if (!shortId) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "short id not found",
+        data: {},
+      });
+    }
+
+    const url = await findUrlByShortId(shortId);
+
+    if (!url) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        success: false,
+        message: "URL not found",
+      });
+    }
+
+    const qrCode = await QRCode.toDataURL(url.shortUrl);
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "QR code retrieved successfully",
+      data: {
+        qrCode,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
