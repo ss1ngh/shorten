@@ -19,7 +19,7 @@ A fast and efficient full-stack URL shortening service that allows users to crea
 - **Analytics & Tracking**: Records detailed click logs including IP address, user agent, and timestamp.
 - **QR Codes**: Automatically creates and serves downloadable QR codes for every shortened URL.
 - **High Performance Caching**: Uses a Redis caching layer to drastically improve read response times for repeatedly accessed URLs.
-- **Rate Limiting** _(Coming Soon)_: Network protection against abuse and spam via Redis-backed request rate limits.
+- **Rate Limiting**: Network protection against abuse and spam via API request rate limits using `express-rate-limit`.
 
 ## Architecture
 
@@ -53,6 +53,4 @@ The data below clearly highlights the performance benefits provided by the Redis
 
 ![alt text](image-1.png)
 
-## Upcoming Implementations
 
-- **Rate limiting** logic using `rate-limit-redis` will be added next to securely gate the API routes from potential spam or DDoS attacks.
