@@ -9,6 +9,7 @@ import {
   incrementClicks,
 } from "../repository/index.js";
 import { error } from "node:console";
+import { getCache, setCache } from "../services/index.js";
 
 export const createShortUrl = async (
   req: Request,
@@ -64,13 +65,21 @@ export const getShortUrl = async (
       });
     }
 
-    const url = await findUrlByShortId(shortId);
+    const cacheKey = `url:${shortId}`;
+    let fullUrl = await getCache<string>(cacheKey);
 
-    if (!url) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        success: false,
-        message: "URL not found",
-      });
+    if (!fullUrl) {
+      const url = await findUrlByShortId(shortId);
+
+      if (!url) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          success: false,
+          message: "URL not found",
+        });
+      }
+
+      fullUrl = url.fullUrl;
+      await setCache(cacheKey, fullUrl, 86400);
     }
 
     const rawIp =
@@ -80,7 +89,7 @@ export const getShortUrl = async (
 
     await incrementClicks(shortId, { ip, userAgent });
 
-    return res.redirect(StatusCodes.MOVED_TEMPORARILY, url.fullUrl);
+    return res.redirect(StatusCodes.MOVED_TEMPORARILY, fullUrl!);
   } catch (error) {
     next(error);
   }
