@@ -1,74 +1,37 @@
-import type { Request, Response, NextFunction } from "express";
 import { prisma } from "../config/index.js";
-import { nanoid } from "nanoid";
-import { StatusCodes } from "http-status-codes";
-import { error } from "node:console";
 
-export const createShortUrl = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const { fullUrl } = req.body;
-
-    const shortId = nanoid(8);
-    const shortUrl = `${baseUrl}/${shortId}`;
-
-    const url = await prisma.url.create({
-      data: {
-        fullUrl,
-        shortId,
-        shortUrl,
-      },
-    });
-
-    return res.status(StatusCodes.CREATED).json({
-      success: true,
-      message: "short URL created",
-      data: url,
-      error: {},
-    });
-  } catch (error) {
-    next(error);
-  }
+export const saveUrl = async (data: {
+  fullUrl: string;
+  shortId: string;
+  shortUrl: string;
+}) => {
+  return await prisma.url.create({ data });
 };
 
-export const getShortUrl = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const { shortId } = req.params;
+export const findUrlByShortId = async (shortId: string) => {
+  return await prisma.url.findUnique({
+    where: { shortId },
+  });
+};
 
-    if (typeof shortId !== "string") {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        success: false,
-        message: "Invalid short ID format",
-      });
-    }
-    const url = await prisma.url.findUnique({
+export const incrementClicks = async (
+  shortId: string,
+  metadata: { ip: string; userAgent: string },
+) => {
+  return await prisma.$transaction(async (tx) => {
+    const url = await tx.url.update({
       where: { shortId },
+      data: { clicks: { increment: 1 } },
     });
 
-    if (!url) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        success: false,
-        message: "url not found",
-        data: {},
-        error: error,
-      });
-    }
-    await prisma.url.update({
-      where: { shortId },
+    await tx.clicks.create({
       data: {
-        clicks: { increment: 1 },
+        ip: metadata.ip,
+        userAgent: metadata.userAgent,
+        urlId: url.id,
       },
     });
 
-    return res.redirect(StatusCodes.MOVED_TEMPORARILY, url.fullUrl);
-  } catch (error) {
-    next(error);
-  }
+    return url;
+  });
 };
