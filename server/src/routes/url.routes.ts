@@ -1,8 +1,12 @@
-import express from "express";
+import { Router } from "express";
+import { createShortUrl, getShortUrl, getShortUrlQrCode } from "../controllers/url.controller.js";
+import { getAnalytics } from "../controllers/analytics.controller.js";
 
-const router = express.Router();
+const router = Router();
 
-router.post("/shortener", createShortUrl);
-router.get("/shortener", getShortUrl);
+router.post("/shorten", createShortUrl);
+router.get("/analytics/:shortId", getAnalytics);
+router.get("/qr/:shortId", getShortUrlQrCode);
+router.get("/:shortId", getShortUrl);
 
 export default router;
