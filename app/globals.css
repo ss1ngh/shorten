@@ -24,3 +24,32 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* QR reveal */
+.qr-reveal .qr-canvas {
+  opacity: 0;
+}
+
+.qr-reveal .qr-final {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@keyframes qrPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.qr-pulse {
+  animation: qrPulse 0.6s ease-out;
+}
