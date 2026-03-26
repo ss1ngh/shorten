@@ -63,7 +63,7 @@ export default function PricingSection() {
                     {plans.map((plan, i) => (
                         <div
                             key={i}
-                            className="group rounded-[28px] transition-all duration-300 hover:scale-[1.03]"
+                            className="group rounded-[28px] transition-all duration-300 hover:scale-[1.010]"
                         >
                             <div className="bg-white rounded-[24px] p-6 shadow-[0_12px_30px_rgba(0,0,0,0.08)]  transition-all duration-300 h-full flex flex-col justify-between">
 
