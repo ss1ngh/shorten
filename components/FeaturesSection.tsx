@@ -144,13 +144,13 @@ const FeaturesSection = () => {
         <section className="bg-white w-full py-28 px-6 border-t border-gray-100">
 
             {/* Header */}
-            <div className="max-w-6xl mx-auto mb-20">
+            <div className="max-w-5xl mx-auto mb-20">
                 <h2 className="text-[42px] md:text-[56px] font-black font-bold text-gray-950">
                     Everything you need <br /> to manage and grow.
                 </h2>
             </div>
 
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 auto-rows-[320px]">
+            <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 auto-rows-[320px]">
 
                 {/* MAP */}
                 <div className={`md:col-span-8 bg-white border hover:border-gray-300 rounded-[2.5rem] ${shadow} p-10 relative overflow-hidden`}>

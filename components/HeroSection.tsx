@@ -75,8 +75,9 @@ const HeroSection = () => {
         </div>
       </div>
 
+
       {/* --- Grey Section --- */}
-      <div className="relative w-full bg-[#f8f8f8] pt-8 pb-24 border-t border-gray-100">
+      <div className="relative w-full bg-[#f8f8f8] pt-15 pb-24 border-t border-gray-100">
 
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-14 bg-white rounded-b-[2.5rem] px-12 flex items-center justify-center z-10 border-b border-x border-gray-100 hidden md:flex outline-none focus:ring-0">
           <svg className="absolute -left-6 top-[-1px] w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">

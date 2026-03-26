@@ -17,9 +17,19 @@ import {
 
 const DashboardMockup = () => {
   return (
-    <div className="p-[8px] rounded-[2.75rem] bg-gradient-to-b from-white/40 to-white/10 backdrop-blur-xl border border-white/30 shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
+    <div className="relative p-[8px] rounded-[2.75rem] backdrop-blur-3xl border border-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
 
-      <div className="w-full bg-white/80 border border-gray-200 backdrop-blur-md rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col h-[550px] select-none">
+      {/* 🔥 EVEN RADIAL GLOW */}
+      <div className="pointer-events-none absolute inset-0 rounded-[2.75rem] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.35),rgba(255,255,255,0.15)_40%,transparent_70%)]" />
+
+      {/* 🔥 EDGE LIGHT */}
+      <div className="pointer-events-none absolute inset-0 rounded-[2.75rem] border border-white/30" />
+
+      {/* INNER GLASS CONTAINER */}
+      <div className="relative w-full bg-white/60 backdrop-blur-xl border border-white/50 rounded-[2.5rem] shadow-[0_8px_25px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col h-[550px] select-none">
+
+        {/* INNER HIGHLIGHT */}
+        <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] border border-white/20"></div>
 
         {/* Header */}
         <div className="h-14 border-b border-gray-100 flex items-center justify-between px-6 bg-gray-50/50">
@@ -62,7 +72,7 @@ const DashboardMockup = () => {
         <div className="flex flex-1 bg-gray-50/30">
 
           {/* Sidebar */}
-          <div className="w-48 border-r border-gray-100 p-4 hidden md:flex flex-col gap-6 bg-white">
+          <div className="w-48 border-r border-gray-100 p-4 hidden md:flex flex-col gap-6 bg-white/80 backdrop-blur-md">
             <div className="space-y-1">
               <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-100 text-sm font-medium text-gray-900">
                 <Link2 className="w-4 h-4" /> Links
@@ -93,7 +103,7 @@ const DashboardMockup = () => {
                 <label className="text-xs font-semibold text-gray-700">
                   Destination URL
                 </label>
-                <div className="border border-gray-200 rounded-xl px-4 py-2 text-sm bg-white flex justify-between">
+                <div className="border border-gray-200 rounded-xl px-4 py-2 text-sm bg-white/80 backdrop-blur-sm flex justify-between">
                   <span className="truncate">https://acme.com/launch</span>
                   <FileText className="w-4 h-4 text-gray-400" />
                 </div>
@@ -102,7 +112,7 @@ const DashboardMockup = () => {
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="text-xs font-semibold text-gray-700">Domain</label>
-                  <div className="border border-gray-200 rounded-xl px-3 py-2 text-sm bg-white flex justify-between">
+                  <div className="border border-gray-200 rounded-xl px-3 py-2 text-sm bg-white/80 backdrop-blur-sm flex justify-between">
                     <span>go.acme.com</span>
                     <ChevronDown className="w-4 h-4 text-gray-400" />
                   </div>
@@ -110,7 +120,7 @@ const DashboardMockup = () => {
 
                 <div className="space-y-1">
                   <label className="text-xs font-semibold text-gray-700">Short Link</label>
-                  <div className="border border-gray-200 rounded-xl px-3 py-2 text-sm bg-white">
+                  <div className="border border-gray-200 rounded-xl px-3 py-2 text-sm bg-white/80 backdrop-blur-sm">
                     launch
                   </div>
                 </div>
@@ -125,23 +135,21 @@ const DashboardMockup = () => {
                 </div>
               </div>
 
-              {/* Performance */}
               <div className="grid grid-cols-3 gap-3">
                 <Stat label="Clicks" value="2,481" />
                 <Stat label="CTR" value="18.2%" />
                 <Stat label="Conversions" value="312" />
               </div>
 
-              {/* Activity */}
               <div className="space-y-2">
                 <p className="text-xs font-semibold text-gray-700">Activity</p>
-                <div className="text-xs text-gray-500 bg-white border rounded px-3 py-2">
+                <div className="text-xs text-gray-500 bg-white/80 border rounded px-3 py-2">
                   New click from Brooklyn, New York
                 </div>
-                <div className="text-xs text-gray-500 bg-white border rounded px-3 py-2">
+                <div className="text-xs text-gray-500 bg-white/80 border rounded px-3 py-2">
                   New click from Paris, France
                 </div>
-                <div className="text-xs text-gray-500 bg-white border rounded px-3 py-2">
+                <div className="text-xs text-gray-500 bg-white/80 border rounded px-3 py-2">
                   New click from Dubai, UAE
                 </div>
               </div>
@@ -151,7 +159,7 @@ const DashboardMockup = () => {
           {/* Right */}
           <div className="w-64 border-l border-gray-100 bg-gray-50/50 p-4 hidden lg:flex flex-col gap-4">
 
-            <div className="bg-white border rounded-2xl p-4 flex flex-col items-center">
+            <div className="bg-white/80 backdrop-blur-sm border rounded-2xl p-4 flex flex-col items-center">
               <QrCode className="w-20 h-20" />
               <div className="flex gap-2 mt-2">
                 <div className="w-5 h-5 bg-gray-200 rounded"></div>
@@ -160,7 +168,7 @@ const DashboardMockup = () => {
               </div>
             </div>
 
-            <div className="bg-white border rounded-2xl overflow-hidden">
+            <div className="bg-white/80 backdrop-blur-sm border rounded-2xl overflow-hidden">
               <div className="bg-gray-100 h-20 flex items-center justify-center">
                 <ImageIcon className="w-6 h-6 text-gray-300" />
               </div>
@@ -172,7 +180,7 @@ const DashboardMockup = () => {
               </div>
             </div>
 
-            <div className="bg-white border rounded-xl p-3">
+            <div className="bg-white/80 backdrop-blur-sm border rounded-xl p-3">
               <p className="text-[10px] text-gray-400">Today</p>
               <div className="flex justify-between text-sm">
                 <span>Clicks</span>
@@ -187,7 +195,7 @@ const DashboardMockup = () => {
 };
 
 const Stat = ({ label, value }: { label: string; value: string }) => (
-  <div className="bg-white border rounded-xl p-2">
+  <div className="bg-white/80 backdrop-blur-sm border rounded-xl p-2">
     <p className="text-[10px] text-gray-400">{label}</p>
     <p className="text-sm font-semibold">{value}</p>
   </div>
