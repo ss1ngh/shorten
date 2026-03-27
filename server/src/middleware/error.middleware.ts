@@ -27,6 +27,7 @@ export const errorHandler = (
   }
 
   console.error("Critical Error:", err);
+  console.error("Stack:", err?.stack);
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     success: false,
     message: "An unexpected error occurred on the server.",

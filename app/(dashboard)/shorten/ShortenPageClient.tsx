@@ -25,7 +25,6 @@ export default function ShortenPageClient() {
   const [copied, setCopied] = useState(false);
   const [recentLinks, setRecentLinks] = useState<LinkItem[]>([]);
 
-  /* 🔥 Load recent links from localStorage */
   useEffect(() => {
     const stored = localStorage.getItem("recent_links");
     if (stored) {
@@ -33,7 +32,6 @@ export default function ShortenPageClient() {
     }
   }, []);
 
-  /* 🔥 Save new link */
   const saveRecent = (link: LinkItem) => {
     const updated = [link, ...recentLinks].slice(0, 5);
     setRecentLinks(updated);
@@ -70,7 +68,6 @@ export default function ShortenPageClient() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-10">
 
-      {/* 🔥 CENTERED INPUT */}
       <div className="w-full max-w-xl text-center space-y-6">
 
         <div>
@@ -128,7 +125,6 @@ export default function ShortenPageClient() {
         )}
       </div>
 
-      {/* 🔥 RECENT LINKS */}
       {recentLinks.length > 0 && (
         <div className="w-full max-w-2xl">
 
