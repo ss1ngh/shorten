@@ -56,7 +56,7 @@ function SidebarItem({
     label,
     href,
 }: {
-    icon: any;
+    icon: React.ComponentType<{ className?: string }>;
     label: string;
     href: string;
 }) {

@@ -23,7 +23,10 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     const stored = localStorage.getItem("recent_links");
-    if (stored) setLinks(JSON.parse(stored));
+    if (stored) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLinks(JSON.parse(stored));
+    }
   }, []);
 
   const downloadQR = (url: string) => {

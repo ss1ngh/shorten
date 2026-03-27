@@ -3,10 +3,10 @@ import { ZodError } from "zod";
 import { StatusCodes } from "http-status-codes";
 
 export const errorHandler = (
-  err: any,
-  req: Request,
+  err: unknown,
+  _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) => {
   if (err instanceof ZodError) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -19,7 +19,7 @@ export const errorHandler = (
     });
   }
 
-  if (err.code === "P2002") {
+  if ((err as { code?: string }).code === "P2002") {
     return res.status(StatusCodes.CONFLICT).json({
       success: false,
       message: "This Short ID is already taken.",
@@ -27,7 +27,7 @@ export const errorHandler = (
   }
 
   console.error("Critical Error:", err);
-  console.error("Stack:", err?.stack);
+  console.error("Stack:", (err as { stack?: string }).stack);
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     success: false,
     message: "An unexpected error occurred on the server.",

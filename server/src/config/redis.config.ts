@@ -1,13 +1,22 @@
-import { createClient } from "redis";
+import { createClient, type RedisClientType } from "redis";
 
-export const redisClient = {
-  get: async (key: string) => null,
-  set: async (key: string, val: string, opts: any) => {},
-  del: async (key: string) => {},
-  on: (event: string, cb: any) => {},
+type StubClient = {
+  get: (key: string) => Promise<string | null>;
+  set: (key: string, val: string, opts?: { EX: number }) => Promise<void>;
+  del: (key: string) => Promise<number>;
+  on: (event: string, cb: () => void) => void;
+  isOpen: boolean;
+  connect: () => Promise<void>;
+};
+
+export const redisClient: RedisClientType | StubClient = {
+  get: async (_key: string) => null,
+  set: async (_key: string, _val: string, _opts?: { EX: number }) => {},
+  del: async (_key: string) => 0,
+  on: () => {},
   isOpen: false,
   connect: async () => {},
-} as any;
+};
 
 export const redisClientConnect = async () => {
   console.log("Redis caching is currently disabled.");

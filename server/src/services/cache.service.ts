@@ -16,7 +16,7 @@ export const getCache = async <T>(key: string): Promise<T | null> => {
 
 export const setCache = async (
   key: string,
-  data: any,
+  data: unknown,
   ttlSeconds: number,
 ): Promise<void> => {
   try {

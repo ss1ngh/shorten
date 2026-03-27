@@ -74,7 +74,8 @@ const FeaturesSection = () => {
 
         function startAnimation() {
             let progress = 0;
-            const particles: any[] = [];
+            type Particle = { x: number; y: number; tx: number; ty: number; z: number };
+            const particles: Particle[] = [];
 
             for (let i = 0; i < 160; i++) {
                 particles.push({
